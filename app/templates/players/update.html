@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Jugadores{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        Actualizar infomación del Jugador
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <form class="form" method="POST">
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="first_name">Nombres:</label>  
+                            <div class="col-md-5">
+                                <input value="{{ player.first_name }}" id="id_first_name" name="first_name" type="text" class="form-control input-md" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="last_name">Apellidos</label>  
+                            <div class="col-md-5">
+                                <input value="{{ player.last_name }}" id="id_last_name" name="last_name" type="text" class="form-control input-md" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="position">Posición</label>  
+                            <div class="col-md-5">
+                                <input value="{{ player.position }}" id="id_position" name="position" type="text" class="form-control input-md" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="height_feet">Altura (Pies)</label>  
+                                <div class="col-md-5">
+                                <input value="{{ player.height_feet or 0 }}" id="id_height_feet" name="height_feet" type="number" step=".01" min="0" class="form-control input-md">
+                            </div>
+                        </div>
+        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="height_inches">Altura (Pulgadas)</label>  
+                            <div class="col-md-5">
+                                <input value="{{ player.height_inches or 0 }}" id="id_height_inches" name="height_inches" step=".01" type="number" min="0" class="form-control input-md">
+                            </div>
+                        </div>
+        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="weight_pounds">Peso (Libras)</label>  
+                            <div class="col-md-5">
+                                <input value="{{ player.weight_pounds or 0 }}" id="id_weight_pounds" name="weight_pounds" type="number" min="0" class="form-control input-md">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="team">Equipo</label>
+                            <div class="col-md-5">
+                                <select id="id_team" name="team" class="form-control">
+                                    {% for team in teams %}
+                                        <option value="{{ team.id }}" {% if team.id == player.team.id %} selected {% endif %} >{{ team.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="form-group">
+                            <div class="col-md-5">
+                              <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-success">
+                                Guardar
+                                <i class="fa fa-save" aria-hidden="true"></i> 
+                              </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>        
+            </div>
+        </div>         
+        <hr>   
+        <a class="btn btn-success" href="{{ url_for('players.index') }}" role="button">
+            <i class="fa fa-home" aria-hidden="true"></i> 
+            Home
+        </a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+    function inchToFeet(inch){
+        return Math.round((inch / 12) * 100) / 100;
+    }
+
+    function feetToInch(feet){
+        return Math.round((feet * 12) * 100) / 100;
+    }
+
+
+    $(document).ready(function() {
+        $("#id_height_inches").change(function(){
+            inches = $("#id_height_inches").val();
+            $("#id_height_feet").val(inchToFeet(inches));
+        })
+
+        $("#id_height_feet").change(function(){
+            feet = $("#id_height_feet").val();
+            $("#id_height_inches").val(feetToInch(feet));
+        })
+
+
+    } );
+</script>
+{% endblock %}

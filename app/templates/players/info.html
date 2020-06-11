@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Jugadores{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        Jugador
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"> 
+            <i class="fa fa-user" aria-hidden="true"></i>
+            {{ player.first_name }} {{ player.last_name }}
+        </h5>
+        <p>
+            Posición: <strong>{{ player.position }}</strong><br>
+            Altura (pies): <strong>{{ player.height_feet or "Sin información" }}</strong><br>
+            Altura (pulgadas): <strong>{{ player.height_inches or "Sin información" }}</strong><br>
+            Peso (Libras): <strong>{{ player.weight_pounds  or "Sin información"}}</strong><br>
+        </p>
+        <hr>
+        <h5 class="card-title">
+            <i class="fa fa-users" aria-hidden="true"></i> 
+            Equipo: {{ player.team.name }}
+        </h5>
+        <p>
+            Nombre Completo: <strong>{{ player.team.full_name }}</strong><br>
+            abreviación: <strong>{{ player.team.abbreviation }}</strong><br>
+            Ciudad: <strong>{{ player.team.city }}</strong><br>
+            división: <strong>{{ player.team.division }}</strong><br>
+        </p>
+        <hr>
+        <a class="btn btn-success" href="{{ url_for('players.index') }}" role="button">
+            <i class="fa fa-home" aria-hidden="true"></i> 
+            Home
+        </a>
+        <a class="btn btn-info" href="{{ url_for('players.update', player_id=player.id) }}" role="button">
+            <i class="fa fa-pencil" aria-hidden="true"></i> 
+            Editar
+        </a>
+    </div>
+  </div>
+{% endblock %}
+

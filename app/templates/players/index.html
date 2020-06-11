@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Jugadores{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        Jugadores
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Lista de Jugadores</h5>
+        <hr>
+        <table id="table_players" class="stripe" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Posición</th>
+                    <th>Equipo</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>        
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#table_players').DataTable({
+            "pageLength": 25,
+            "ordering": false,
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "{{ url_for('players.data_table') }}",
+                "type": "POST"
+            }
+        });
+    } );
+</script>
+{% endblock %}
