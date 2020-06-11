@@ -85,6 +85,7 @@ def serialize_data_talbe(players, draw):
                 player["last_name"],
                 player["position"],
                 player["team"]["full_name"],
+                player["weight_pounds"],
                 show_button,
                 edit_button
             ])
